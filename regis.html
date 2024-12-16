@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>สมัครบัญชีใหม่</title>
+</head>
+<body>
+    <h2>สมัครบัญชีใหม่</h2>
+    <form action="showdata.php" method="POST">
+        <label for="username">ชื่อผู้ใช้:</label>
+        <input type="text" id="username" name="username" required>
+        <br>
+        <label for="password">รหัสผ่าน:</label>
+        <input type="password" id="password" name="password" required>
+        <br>
+        <label for="confirm_password">ยืนยันรหัสผ่าน:</label>
+        <input type="password" id="confirm_password" name="confirm_password" required>
+        <br>
+        <label for="firstname">ชื่อ:</label>
+        <input type="text" id="firstname" name="firstname" required>
+        <br>
+        <label for="lastname">นามสกุล:</label>
+        <input type="text" id="lastname" name="lastname" required>
+        <br>
+        <label for="gender">เพศ:</label>
+        <select id="gender" name="gender" required>
+            <option value="male">ชาย</option>
+            <option value="female">หญิง</option>
+            <option value="other">อื่นๆ</option>
+        </select>
+        <br>
+        <label for="age">อายุ:</label>
+        <input type="number" id="age" name="age" min="1" required>
+        <br>
+        <label for="new_province">จังหวัด:</label>
+        <input type="text" id="province" name="province" required autocomplete="off">
+        <div id="autocomplete-list" class="autocomplete-suggestions"></div>
+        <script>
+            const provinces = [
+                "กระบี่", "กรุงเทพมหานคร", "กาญจนบุรี", "กาฬสินธุ์", "กำแพงเพชร",
+                "ขอนแก่น", "จันทบุรี", "ฉะเชิงเทรา", "ชลบุรี", "ชัยนาท",
+                "ชัยภูมิ", "ชุมพร", "เชียงราย", "เชียงใหม่", "ตรัง",
+                "ตราด", "ตาก", "นครนายก", "นครปฐม", "นครพนม",
+                "นครราชสีมา", "นครศรีธรรมราช", "นครสวรรค์", "นนทบุรี",
+                "นราธิวาส", "น่าน", "บึงกาฬ", "บุรีรัมย์", "ปทุมธานี",
+                "ประจวบคีรีขันธ์", "ปราจีนบุรี", "ปัตตานี", "พระนครศรีอยุธยา",
+                "พะเยา", "พังงา", "พัทลุง", "พิจิตร", "พิษณุโลก",
+                "เพชรบุรี", "เพชรบูรณ์", "แพร่", "ภูเก็ต", "มหาสารคาม",
+                "มุกดาหาร", "แม่ฮ่องสอน", "ยโสธร", "ยะลา", "ร้อยเอ็ด",
+                "ระนอง", "ระยอง", "ราชบุรี", "ลพบุรี", "ลำปาง",
+                "ลำพูน", "เลย", "ศรีสะเกษ", "สกลนคร", "สงขลา",
+                "สตูล", "สมุทรปราการ", "สมุทรสงคราม", "สมุทรสาคร",
+                "สระแก้ว", "สระบุรี", "สิงห์บุรี", "สุโขทัย",
+                "สุพรรณบุรี", "สุราษฎร์ธานี", "สุรินทร์", "หนองคาย",
+                "หนองบัวลำภู", "อ่างทอง", "อำนาจเจริญ", "อุดรธานี",
+                "อุตรดิตถ์", "อุทัยธานี", "อุบลราชธานี"
+            ];
+
+            const input = document.getElementById('province');
+            const autocompleteList = document.getElementById('autocomplete-list');
+
+            input.addEventListener('input', function() {
+                const value = this.value;
+                autocompleteList.innerHTML = ''; // ล้างรายการแนะนำก่อนหน้า
+                if (!value) return; // ถ้าค่าในช่องว่างอยู่ ให้ออกจากฟังก์ชัน
+
+                const suggestions = provinces.filter(province => province.includes(value));
+                suggestions.forEach(suggestion => {
+                    const div = document.createElement('div');
+                    div.textContent = suggestion;
+                    div.classList.add('autocomplete-suggestion');
+                    div.addEventListener('click', function() {
+                        input.value = suggestion; // ตั้งค่าฟิลด์ input ให้เป็นคำที่เลือก
+                        autocompleteList.innerHTML = ''; // ล้างรายการแนะนำ
+                    });
+                    autocompleteList.appendChild(div);
+                });
+            });
+
+            // คลิกที่อื่นนอกจากช่อง input จะลบรายการแนะนำ
+            document.addEventListener('click', function(e) {
+                if (e.target !== input) {
+                    autocompleteList.innerHTML = ''; // ล้างรายการแนะนำ
+                }
+            });
+        </script>
+        <br>
+        <label for="email">อีเมล์:</label>
+        <input type="email" id="email" name="email" required>
+        <br>
+        <input type="submit" value="สมัครบัญชี">
+        <a href="index.html">กลับไปยังหน้า เข้าสู่ระบบ</a>
+    </form>
+</body>
+</html>
